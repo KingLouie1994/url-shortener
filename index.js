@@ -20,20 +20,14 @@ app.use(express.json());
 app.use(express.static("./public"));
 
 // Routes
-app.get("/", (req, res, next) => {
-  res.json({
-    message: "Welcome to URL shortener API",
-  });
-});
-
 // Route that redirects to url
-add.get("/:id", (req, res, next) => {});
+// app.get("/:id", (req, res, next) => {});
 
-// Route to create a short url
-add.post("/url", (req, res, next) => {});
+// // Route to create a short url
+// app.post("/url", (req, res, next) => {});
 
-// Route to get short URL by id
-add.get("/url/:id", (req, res, next) => {});
+// // Route to get short URL by id
+// app.get("/url/:id", (req, res, next) => {});
 
 // Server listen
 const port = process.env.PORT || 8000;
