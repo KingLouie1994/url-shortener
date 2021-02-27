@@ -18,6 +18,8 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
+require("dotenv").config();
+
 // Middleware to handle error
 app.use((error, req, res, next) => {
   if (error.status) {
@@ -57,12 +59,19 @@ app.post("/url", async (req, res, next) => {
     });
     if (!alias) {
       alias = nanoid(5);
+    } else {
+      const existing = await urls.findOne({ alias });
+      if (existing) {
+        throw new Error("Alias in use!");
+      }
     }
     alias = alias.toLowerCase();
-    res.json({
-      alias,
+    const newUrl = {
       url,
-    });
+      alias,
+    };
+    const created = await urls.insert(newUrl);
+    res.json(created);
   } catch (error) {
     next(error);
   }
@@ -70,6 +79,11 @@ app.post("/url", async (req, res, next) => {
 
 // Route to get short URL by id
 app.get("/url/:id", (req, res, next) => {});
+
+// DB connection
+const db = monk(process.env.MONGO_URI);
+const urls = db.get("urls");
+urls.createIndex("name");
 
 // Server listen
 const port = process.env.PORT || 8000;
