@@ -37,9 +37,6 @@ app.use((error, req, res, next) => {
 app.use(express.static("./public"));
 
 // Routes
-// Route that redirects to url
-app.get("/:id", (req, res, next) => {});
-
 // Schema that has to be fulfilled to make a post request
 const schema = yup.object().shape({
   alias: yup
@@ -77,13 +74,27 @@ app.post("/url", async (req, res, next) => {
   }
 });
 
+// Route that redirects to url
+app.get("/:id", async (req, res, next) => {
+  const { id: alias } = req.params;
+  try {
+    const url = await urls.findOne({ alias });
+    if (url) {
+      return res.redirect(url.url);
+    }
+    return res.status(404).sendFile(notFoundPath);
+  } catch (error) {
+    return res.status(404).sendFile(notFoundPath);
+  }
+});
+
 // Route to get short URL by id
 app.get("/url/:id", (req, res, next) => {});
 
 // DB connection
 const db = monk(process.env.MONGO_URI);
 const urls = db.get("urls");
-urls.createIndex("name");
+urls.createIndex({ alias: 1 }, { unique: true });
 
 // Server listen
 const port = process.env.PORT || 8000;
