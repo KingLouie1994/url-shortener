@@ -2,7 +2,6 @@
 const express = require("express");
 
 // Import of middlewares
-const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const yup = require("yup");
@@ -15,7 +14,6 @@ const app = express();
 // Use of middlewares
 app.use(helmet());
 app.use(morgan("tiny"));
-app.use(cors());
 app.use(express.json());
 
 require("dotenv").config();
@@ -88,9 +86,6 @@ app.get("/:id", async (req, res, next) => {
   }
 });
 
-// Route to get short URL by id
-app.get("/url/:id", (req, res, next) => {});
-
 // DB connection
 const db = monk(process.env.MONGO_URI);
 const urls = db.get("urls");
@@ -99,5 +94,5 @@ urls.createIndex({ alias: 1 }, { unique: true });
 // Server listen
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
+  console.log(`Listening at port: ${port}`);
 });

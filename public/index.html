@@ -11,5 +11,19 @@
     <header>
         <h1>URL Shortener by Luis &#128018</h1>
     </header>
+    <main id="app">
+        <form @submit.prevent="createUrl()">
+            <label for="url">URL</label>
+            <input name="url" id="url" v-model="url" />
+            <label for="alias">Alias</label>
+            <input name="alias" id="alias" v-model="alias" />
+            <button type="submit">Create</button>
+        </form>
+        <pre>
+            {{JSON.stringify(created, null, 2)}}
+        </pre>
+    </main>
+    <script type="module" src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

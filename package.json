@@ -4,15 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "server": "nodemon index.js"
   },
-  "author": ":Luis Schekerka",
+  "author": "Luis Schekerka",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6",
+    "express-slow-down": "^1.4.0",
     "helmet": "^4.4.1",
     "monk": "^7.3.3",
     "morgan": "^1.10.0",
@@ -20,7 +21,6 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
     "nodemon": "^2.0.7"
   }
 }
