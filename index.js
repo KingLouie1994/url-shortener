@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const helmet = require("helmet");
-const { add } = require("lodash");
+const yup = require("yup");
 
 // Initialise
 const app = express();
@@ -21,13 +21,19 @@ app.use(express.static("./public"));
 
 // Routes
 // Route that redirects to url
-// app.get("/:id", (req, res, next) => {});
+app.get("/:id", (req, res, next) => {});
 
-// // Route to create a short url
-// app.post("/url", (req, res, next) => {});
+// Schema that has to be fulfilled to make a post request
+const schema = yup.object().shape({
+  alias: yup.string().trim().matches(/[\w\-]/i),
+  url: yup.string().trim().url().required()
+})
 
-// // Route to get short URL by id
-// app.get("/url/:id", (req, res, next) => {});
+// Route to create a short url
+app.post("/url", (req, res, next) => {});
+
+// Route to get short URL by id
+app.get("/url/:id", (req, res, next) => {});
 
 // Server listen
 const port = process.env.PORT || 8000;
