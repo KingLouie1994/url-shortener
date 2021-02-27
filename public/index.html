@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL Shortener</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <header>
-        <h1>URL Shortener by Luis &#128018</h1>
+      <h1>Luis URL Shortener &#128018</h1>
     </header>
     <main id="app">
-        <form @submit.prevent="createUrl()">
-            <label for="url">URL</label>
-            <input name="url" id="url" v-model="url" />
-            <label for="alias">Alias</label>
-            <input name="alias" id="alias" v-model="alias" />
-            <button type="submit">Create</button>
-        </form>
-        <pre>
-            {{JSON.stringify(created, null, 2)}}
-        </pre>
+      <form class="form" v-if="formVisible" @submit.prevent="createUrl()">
+        <div v-if="error" class="error">{{error}}</div>
+        <input
+          class="input"
+          type="text"
+          v-model="url"
+          name="url"
+          id="url"
+          placeholder="enter a url"
+        />
+        <input
+          class="input"
+          type="text"
+          v-model="alias"
+          name="alias"
+          id="alias"
+          placeholder="enter a alias"
+        />
+        <button type="submit" class="create">create</button>
+      </form>
+      <div v-if="created">
+        <p class="created">
+          Your short url is: <a :href="created" target="_blank">{{created}}</a>
+        </p>
+      </div>
     </main>
-    <script type="module" src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
