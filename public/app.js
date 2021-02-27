@@ -23,7 +23,7 @@ const app = new Vue({
       if (response.ok) {
         const result = await response.json();
         this.formVisible = false;
-        this.created = `http://localhost:8000/${result.alias}`;
+        this.created = `https://url-shortener-node-2021.herokuapp.com/${result.alias}`;
       } else if (response.status === 429) {
         this.error =
           "You are sending too many requests. Try again in 30 seconds.";
